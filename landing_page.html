@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html>
+<title>Shop</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/5/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Karma">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css"
+  integrity="sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA=="
+  crossorigin="anonymous" referrerpolicy="no-referrer">
+
+<style>
+  body,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Karma", sans-serif
+  }
+
+  .w3-bar-block .w3-bar-item {
+    padding: 20px
+  }
+
+  .w3-content {
+    max-width: 85%;
+  }
+</style>
+
+<body>
+
+  <!-- Sidebar -->
+
+  <nav class="w3-sidebar w3-bar-block w3-card w3-top w3-xlarge w3-animate-left"
+    style="display:none;z-index:2;width:40%;min-width:300px" id="mySidebar">
+
+    <a href="javascript:void(0)" onclick="w3_close()" class="w3-bar-item w3-button">
+      Close Menu </a>
+
+    <a href="#welcome" onclick="w3_close()" class="w3-bar-item w3-button">
+      Welcome </a>
+
+    <a href="#product" onclick="w3_close()" class="w3-bar-item w3-button">
+      Product </a>
+
+    <a href="#order" onclick="w3_close()" class="w3-bar-item w3-button">
+      Order </a>
+
+    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button">
+      About </a>
+
+  </nav>
+
+  <!-- Top Menu -->
+
+  <div class="w3-top">
+
+    <div class="w3-flex w3-white w3-xlarge" style="margin:0;align-items:center">
+
+      <button class="w3-button w3-padding-16" onclick="w3_open()">
+        ☰
+      </button>
+
+      <div class="w3-padding-16" style="flex:1">
+        Shop
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- Page Content -->
+
+  <main class="w3-padding w3-content" style="margin-top:40px">
+
+
+    <!-- Welcome Banner -->
+
+    <header id="welcome" class="w3-display-container">
+      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTErA9YHWbpslnGYl8Ye7gPQla59Z2kUGumwPrx6aHWdQ&s=10"
+        alt="Architecture" style="width:100%; height: 500px;object-fit: cover;">
+      <div class="w3-display-bottomleft w3-padding w3-text-white w3-opacity-min">
+        <h1 class="w3-text-white w3-wide">
+          <span class="w3-hide-small w3-text-light-grey">New product</span>
+        </h1>
+        <p class="w-50">Lorem ipsum dolor sit amet consectetur adipisicing elit. Assumenda eveniet minus temporibus iure
+          nesciunt nobis deleniti fuga nam nostrum, quis omnis, ea voluptas reprehenderit, voluptatem quod cum amet non
+          corrupti.</p>
+        <a href="#order" class="btn btn-dark" role="button">Buy Now</a>
+        <a href="#product" class="btn btn-outline-secondary" role="button">View Products</a>
+      </div>
+    </header>
+
+
+    <!-- Product Grid -->
+
+    <section id="product" class="w3-grid w3-center"
+      style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Sandwich" style="width:100%">
+        <h3>Product 1</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Steak" style="width:100%">
+        <h3>Product 2</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Cherries" style="width:100%">
+        <h3>Product 3</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Pasta and Wine" style="width:100%">
+        <h3>Product 4</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Popsicle" style="width:100%">
+        <h3>Product 5</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Salmon" style="width:100%">
+        <h3>Product 6</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Sandwich" style="width:100%">
+        <h3>Product 7</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+
+      <article>
+        <img
+          src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+          alt="Croissant" style="width:100%">
+        <h3>Product 8</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure doloremque, eaque mollitia ullam debitis quia
+          ratione enim.
+        </p>
+      </article>
+    </section>
+
+    <!-- Pagination -->
+
+    <div class="w3-center w3-padding-32">
+      <div class="w3-bar">
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">«</a>
+        <a href="#" class="w3-bar-item w3-black w3-button">1</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">2</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">3</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">4</a>
+        <a href="#" class="w3-bar-item w3-button w3-hover-black">»</a>
+      </div>
+    </div>
+
+    <hr id="about">
+
+    <!-- Order -->
+    <section id="order" class="container my-5">
+      <div class="row align-items-center g-5">
+        <div class="col-sm-12 col-md-4 text-center text-md-start">
+          <h2 class="fw-bold mb-3">Order today!</h2>
+          <p class="text-muted mb-4">Enter your information.
+          </p>
+        </div>
+
+        <div class="col-sm-12 col-md-8">
+          <div class="p-4 bg-white border rounded">
+            <h4 class="mb-4 fw-semibold">Buy Now</h4>
+            <form action="/action_page.php">
+              <div class="mb-3">
+                <label for="name" class="form-label fw-medium text-secondary">Name:</label>
+                <input type="text" class="form-control" id="name" name="name" required>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label fw-medium text-secondary">Email:</label>
+                <input type="email" class="form-control" id="email" name="email" required>
+              </div>
+              <div class="mb-3">
+                <label for="phone" class="form-label fw-medium text-secondary">Phone:</label>
+                <input type="tel" class="form-control" id="phone" name="phone" required>
+              </div>
+              <div class="mb-3">
+                <label for="address" class="form-label fw-medium text-secondary">Address:</label>
+                <input type="text" class="form-control" id="address" name="address" required>
+              </div>
+              <div class="d-flex justify-content-end">
+                <button type="submit" class="btn btn-dark py-2 fw-semibold">Confirm</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- About -->
+
+    <section class="w3-container w3-padding-32 w3-center">
+      <h3>About shop</h3>
+      <div class="w3-padding-32">
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores minus mollitia tenetur, debitis voluptatibus
+          expedita molestiae numquam harum quia dignissimos animi totam libero corrupti, repellendus eaque officiis
+          nobis, iusto iste!</p>
+      </div>
+    </section>
+
+    <hr>
+
+    <!-- Footer -->
+
+    <footer class="w3-grid w3-padding-32" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:32px">
+      <div>
+        <h3>FOOTER</h3>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa quibusdam inventore dolorem hic unde beatae
+          recusandae soluta sit itaque? Facere dolor quasi explicabo, rerum maxime distinctio magni in neque
+          praesentium.
+        </p>
+      </div>
+      <div class="w3-serif">
+        <h3>POPULAR TAGS</h3>
+        <p>
+          <span class="w3-tag w3-black w3-margin-bottom">shop</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">New York</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dinner</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Salmon</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">France</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Drinks</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Ideas</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Flavors</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Cuisine</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Chicken</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Dressing</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fried</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Fish</span>
+          <span class="w3-tag w3-dark-grey w3-small w3-margin-bottom">Duck</span>
+        </p>
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    function w3_open() {
+      document.getElementById("mySidebar").style.display = "block";
+    }
+
+    function w3_close() {
+      document.getElementById("mySidebar").style.display = "none";
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"
+    integrity="sha512-HvOjJrdwNpDbkGJIG2ZNqDlVqMo77qbs4Me4cah0HoDrfhrbA+8SBlZn1KrvAQw7cILLPFJvdwIgphzQmMm+Pw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cloudflare.com"></script>
+
+
+</body>
+
+</html>
