@@ -16,6 +16,14 @@
       <h2>Sign in form</h2>
       <form action="/action_page.php">
         <div class="mb-3 mt-3">
+          <label for="name">Name:</label>
+          <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+        </div>
+        <div class="mb-3 mt-3">
+          <label for="phone">Phone:</label>
+          <input type="tel" class="form-control" id="phone" placeholder="Enter phone" name="phone">
+        </div>
+        <div class="mb-3 mt-3">
           <label for="email">Email:</label>
           <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
         </div>
@@ -28,12 +36,12 @@
             <input class="form-check-input" type="checkbox" name="remember"> Remember me
           </label>
         </div>
-        <button type="submit" class="btn btn-dark">Submit</button>
+        <button type="submit" class="btn btn-dark" id="sign_in">Submit</button>
       </form>
     </div>
 
   </div>
-
+<script src="./sign_in.js"></script>
 </body>
 
 </html>
