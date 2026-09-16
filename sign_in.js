@@ -4,37 +4,34 @@ document.getElementById("sign_in").addEventListener(
         event.preventDefault();
 
         const customerData = {
-            name: document.getElementById("name").value,
-            phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value,
-            pass : document.getElementById("pwd").ariaValueMax
+            email : document.getElementById("email").value,
+            pass : document.getElementById("pwd").value
         };
 
-        addCustomer(customerData);
+        sign_in(customerData);    
     }
 )
 
-async function addCustomer(customerData) {
+async function sign_in(customerData) {
     try {
-        const response = await fetch("http://localhost:8080/customers", {
-            method: "POST",
+        const response = await fetch('http://localhost:8080/api/auth/login', {
+            method: 'POST',
             headers: {
-                "Content-Type": "application/json"
+                'Content-Type': 'application/json'
             },
+            credentials: 'include',
             body: JSON.stringify(customerData)
-        });
+        })
 
         if (!response.ok) {
-            throw new Error(`Thêm thất bại: ${response.status}`);
+            alert("Sai email hoặc mật khẩu");
+        } else {
+            alert("Đăng nhập thành công!");
+            window.location.href = "http://localhost:5500/index.html";    
         }
-
-        const newCustomer = await response.json();
-        console.log("Thêm thành công: ", newCustomer);
-
-        document.querySelector("form").reset();
-        editingId = null;
-
+    
     } catch (error) {
         console.error("Lỗi: ",error);
     }
+    
 }
