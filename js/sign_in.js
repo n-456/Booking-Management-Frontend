@@ -1,5 +1,7 @@
-document.getElementById("sign_in").addEventListener(
-    "click",
+urlBE = "https://booking-management-backend-kdwt.onrender.com"
+
+document.getElementById("signin-form").addEventListener(
+    "submit",
     event => {
         event.preventDefault();
 
@@ -14,7 +16,7 @@ document.getElementById("sign_in").addEventListener(
 
 async function sign_in(customerData) {
     try {
-        const response = await fetch('http://localhost:8080/api/auth/login', {
+        const response = await fetch(`${urlBE}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

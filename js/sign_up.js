@@ -1,7 +1,9 @@
+urlBE = "https://booking-management-backend-kdwt.onrender.com"
+
 document.getElementById("sign_up").addEventListener(
     "click",
-    event => {
-        event.preventDefault();
+    e => {
+        e.preventDefault();
 
         const customerData = {
             name: document.getElementById("name").value,
@@ -16,7 +18,7 @@ document.getElementById("sign_up").addEventListener(
 
 async function addCustomer(customerData) {
     try {
-        const response = await fetch("http://localhost:8080/customers", {
+        const response = await fetch(`${urlBE}/customers`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -33,7 +35,7 @@ async function addCustomer(customerData) {
         document.querySelector("form").reset();
 
         alert("Đăng ký thành công. Hãy đăng nhập để tiếp tục")
-        window.location.href = "http://localhost:5500/sign_in.html";
+        window.location.href = "http://localhost:5500/component/sign_in.html";
     } catch (error) {
         console.error("Lỗi: ",error);
     }

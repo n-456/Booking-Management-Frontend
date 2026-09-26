@@ -1,3 +1,4 @@
+urlBE = "https://booking-management-backend-kdwt.onrender.com"
 
     function w3_open() {
       document.getElementById("mySidebar").style.display = "block";
@@ -17,7 +18,7 @@ document.getElementById("sign_out").addEventListener(
 )
 
 function handleSignOut() {
-    fetch('http://localhost:8080/api/auth/logout', {
+    fetch(`${urlBE}/api/auth/logout`, {
         method: 'POST',
         credentials: 'include'
     })
@@ -31,7 +32,7 @@ function handleSignOut() {
 }
 
 async function loadProfile() {
-    const response = await fetch('http://localhost:8080/api/auth/profile', {
+    const response = await fetch(`${urlBE}/api/auth/profile`, {
         method: 'GET',
         credentials: 'include'
     })
