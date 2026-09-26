@@ -1,25 +1,22 @@
 (() => {
-  'use strict'
+  'use strict';
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  const forms = document.querySelectorAll('.needs-validation')
+  const forms = document.querySelectorAll('.needs-validation');
 
-  // Loop over them and prevent submission
   Array.from(forms).forEach(form => {
     form.addEventListener('submit', event => {
-      if (!form.checkValidity()) {
-        event.preventDefault()
-        event.stopPropagation()
-      }
+      event.preventDefault();
+      event.stopPropagation();
 
-      else {
-        event.preventDefault();
+      if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+      } else {
+        form.classList.remove('was-validated');
         submitForm();
       }
-
-    }, false)
-  })
-})()
+    }, false);
+  });
+})();
 
 
 
@@ -53,9 +50,9 @@ async function addCustomer(customerData) {
         const newCustomer = await response.json();
         console.log("Thêm thành công: ", newCustomer);
         document.querySelector("form").reset();
-
-        // alert("Đăng ký thành công. Hãy đăng nhập để tiếp tục")
+        localStorage.setItem("user", JSON.stringify(newCustomer));
         window.location.href = "http://localhost:5500/index.html";
+        
     } catch (error) {
         console.error("Lỗi: ",error);
     }
