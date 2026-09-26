@@ -9,25 +9,7 @@
   integrity="sha512-2bBQCjcnw658Lho4nlXJcc6WkV/UxpE/sAokbXPxQNGqmNdQrWqtw26Ns9kFF/yG792pKR1Sx8/Y1Lf1XN4GKA=="
   crossorigin="anonymous" referrerpolicy="no-referrer">
 
-<style>
-  body,
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "Karma", sans-serif
-  }
-
-  .w3-bar-block .w3-bar-item {
-    padding: 20px
-  }
-
-  .w3-content {
-    max-width: 85%;
-  }
-</style>
+<link rel="stylesheet" href="css/index.css">
 
 <body>
 
@@ -67,15 +49,31 @@
         Shop
       </div>
 
-      <a class="w3-button w3-padding-16">
-        Sign up
-      </a>
-      <a class="w3-button w3-padding-16" href="./sign_in.html">
-        Sign in
-      </a>
-      <button class="w3-button  w3-padding-16">
-        <img src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80" class="rounded-circle" alt="Avatar" height="30px">
-      </button>
+      <div class="" id="dropdown_1">
+        <a class="w3-button w3-padding-16" href="./component/sign_up.html">
+          Sign up
+        </a>
+        <a class="w3-button w3-padding-16" href="./component/sign_in.html">
+          Sign in
+        </a>
+      </div>
+
+      <div class="d-none" id="dropdown_2">
+        <div class="dropdown-center">
+          <button class="btn dropdown-toggle w3-button w3-padding-16" type="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            <img
+            src="https://img.magnific.com/vector-mien-phi/hinh-minh-hoa-bieu-tuong-thu-vien-anh_53876-27002.jpg?semt=ais_hybrid&w=740&q=80"
+            class="rounded-circle" alt="Avatar" height="30px">
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item fw-semibold" href="#" id="account_info">Account</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><button class="dropdown-item fw-semibold text-danger" id="sign_out">Sign out</button></li>
+          </ul>
+        </div>
+      </div>
+
     </div>
 
   </div>
@@ -301,21 +299,13 @@
 
   </main>
 
-  <script>
-    function w3_open() {
-      document.getElementById("mySidebar").style.display = "block";
-    }
-
-    function w3_close() {
-      document.getElementById("mySidebar").style.display = "none";
-    }
+  
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"
     integrity="sha512-HvOjJrdwNpDbkGJIG2ZNqDlVqMo77qbs4Me4cah0HoDrfhrbA+8SBlZn1KrvAQw7cILLPFJvdwIgphzQmMm+Pw=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="https://cloudflare.com"></script>
-
-  <script src="./sign_in.js"></script>
+  <script src="js/index.js"></script>
 
 </body>
 

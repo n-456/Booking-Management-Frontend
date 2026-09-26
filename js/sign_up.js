@@ -1,13 +1,15 @@
-document.getElementById("sign_in").addEventListener(
+urlBE = "https://booking-management-backend-kdwt.onrender.com"
+
+document.getElementById("sign_up").addEventListener(
     "click",
-    event => {
-        event.preventDefault();
+    e => {
+        e.preventDefault();
 
         const customerData = {
             name: document.getElementById("name").value,
             phone: document.getElementById("phone").value,
             email: document.getElementById("email").value,
-            pass : document.getElementById("pwd").ariaValueMax
+            pass : document.getElementById("pwd").value
         };
 
         addCustomer(customerData);
@@ -16,7 +18,7 @@ document.getElementById("sign_in").addEventListener(
 
 async function addCustomer(customerData) {
     try {
-        const response = await fetch("http://localhost:8080/customers", {
+        const response = await fetch(`${urlBE}/customers`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -30,10 +32,10 @@ async function addCustomer(customerData) {
 
         const newCustomer = await response.json();
         console.log("Thêm thành công: ", newCustomer);
-
         document.querySelector("form").reset();
-        editingId = null;
 
+        alert("Đăng ký thành công. Hãy đăng nhập để tiếp tục")
+        window.location.href = "http://localhost:5500/component/sign_in.html";
     } catch (error) {
         console.error("Lỗi: ",error);
     }
