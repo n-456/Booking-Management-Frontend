@@ -11,32 +11,55 @@
 
 <body class="vh-100">
 
+
+
   <div class="d-flex justify-content-center align-items-center h-100 bg-secondary">
     <div class="w-50 border border-dark p-5 bg-body rounded-5">
-      <h2>Sign up form</h2>
-      <form action="/action_page.php">
-        <div class="mb-3 mt-3">
-          <label for="name">Name:</label>
-          <input type="text" class="form-control" id="name" placeholder="Enter name" name="name">
+
+      <form class="row g-3 needs-validation">
+        <h2>Sign up form</h2>
+        <div class="col-12">
+          <div class="form-check">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
+            
+          </div>
         </div>
-        <div class="mb-3 mt-3">
-          <label for="phone">Phone:</label>
-          <input type="tel" class="form-control" id="phone" placeholder="Enter phone" name="phone">
+
+        <div class="col-12">
+          <div class="form-check">
+            <label for="phone" class="form-label">Phone</label>
+            <input type="tel" class="form-control" id="phone" placeholder="Enter phone" name="phone" required minlength="10">
+            
+          </div>
         </div>
-        <div class="mb-3 mt-3">
-          <label for="email">Email:</label>
-          <input type="email" class="form-control" id="email" placeholder="Enter email" name="email">
+
+        <div class="col-12">
+          <div class="form-check">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+            
+          </div>
         </div>
-        <div class="mb-3">
-          <label for="pwd">Password:</label>
-          <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd">
+
+        <div class="col-12">
+          <div class="form-check">
+            <label for="pwd" class="form-label">Password:</label>
+            <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required minlength="5">
+            
+          </div>
         </div>
-        <button type="submit" class="btn btn-dark mt-3" id="sign_up">Submit</button>
+        <div class="col-12">
+          <div class="form-check">
+            <button type="submit" class="btn btn-dark" id="sign_up">Submit</button>
+          </div>
+
+        </div>
       </form>
     </div>
 
   </div>
-<script src="../js/sign_up.js"></script>
+  <script src="../js/sign_up.js"></script>
 </body>
 
 </html>
