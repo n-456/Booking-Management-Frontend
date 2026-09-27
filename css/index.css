@@ -8,10 +8,40 @@
     font-family: "Karma", sans-serif
   }
 
-  .w3-bar-block .w3-bar-item {
-    padding: 20px
+  .hero-section {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    background: rgb(102, 101, 101)
   }
 
-  .w3-content {
-    max-width: 85%;
+  .product-card {
+    overflow: hidden;
+  }
+
+  .product-card:hover {
+    cursor: pointer;
+  }
+
+  .product-image {
+    height: 240px;
+    overflow: hidden;
+    background: #f8f9fa;
+  }
+
+  .product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .pagination .page-link {
+    color: #212529;
+    border-radius: 0.4rem;
+    margin: 0 3px;
+  }
+
+  .pagination .page-item.active .page-link {
+    background-color: #212529;
+    border-color: #212529;
   }
