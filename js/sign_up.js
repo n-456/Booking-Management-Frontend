@@ -63,7 +63,7 @@ async function addCustomer(customerData) {
         localStorage.setItem("user", JSON.stringify(newCustomer));
 
         setTimeout(() => {
-            // window.location.href = "http://localhost:5500/index.html";
+            window.location.href = "http://localhost:5500/index.html";
         }, 5000);
 
     } catch (error) {
