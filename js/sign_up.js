@@ -38,6 +38,10 @@ function submitForm() {
 
 async function addCustomer(customerData) {
 
+    $(document).ready(function () {
+        $('#spinner').load('spinner.html');
+    });
+
     try {
         const response = await fetch(`${urlBE}/customers`, {
             method: "POST",
@@ -57,15 +61,16 @@ async function addCustomer(customerData) {
         console.log("Thêm thành công: ", newCustomer);
         document.querySelector("form").reset();
         localStorage.setItem("user", JSON.stringify(newCustomer));
-        window.location.href = "http://localhost:5500/index.html";
+
+        setTimeout(() => {
+            // window.location.href = "http://localhost:5500/index.html";
+        }, 5000);
 
     } catch (error) {
         console.error("Lỗi: ", error);
     }
 
-    $(document).ready(function () {
-        $('#spinner').load('loading.html');
-    });
+
 
 }
 
