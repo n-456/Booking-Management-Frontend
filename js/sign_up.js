@@ -1,26 +1,21 @@
-(() => {
-    'use strict';
-
-    const forms = document.querySelectorAll('.needs-validation');
-
-    Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            event.preventDefault();
-            event.stopPropagation();
-
-            if (!form.checkValidity()) {
-                form.classList.add('was-validated');
-            } else {
-                form.classList.remove('was-validated');
-                submitForm();
-            }
-        }, false);
-    });
-})();
+// const urlBE = "https://booking-management-backend-kdwt.onrender.com"
+const urlBE = "http://localhost:8080"
+const form = document.querySelector('form');
 
 
+form.addEventListener('submit', e => {
+    e.preventDefault();
 
-urlBE = "https://booking-management-backend-kdwt.onrender.com"
+    if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return;
+    }
+
+    form.classList.remove('was-validated');
+    submitForm();
+});
+
+
 
 function submitForm() {
 
@@ -38,9 +33,7 @@ function submitForm() {
 
 async function addCustomer(customerData) {
 
-    $(document).ready(function () {
-        $('#spinner').load('spinner.html');
-    });
+    $('#spinner').show();
 
     try {
         const response = await fetch(`${urlBE}/customers`, {
@@ -56,21 +49,25 @@ async function addCustomer(customerData) {
             throw new Error(`Thêm thất bại: ${response.status}`);
         }
 
-        const newCustomer = await response.json();
+        const responseLogin = await fetch(`${urlBE}/api/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            credentials: 'include',
+            body: JSON.stringify(customerData)
+        })
+
+        const newCustomer = await responseLogin.json();
 
         console.log("Thêm thành công: ", newCustomer);
-        document.querySelector("form").reset();
+        form.reset();
         localStorage.setItem("user", JSON.stringify(newCustomer));
 
-        setTimeout(() => {
-            window.location.href = "http://localhost:5500/index.html";
-        }, 5000);
+        transPage("http://localhost:5500/index.html");
 
     } catch (error) {
         console.error("Lỗi: ", error);
     }
 
-
-
 }
-
