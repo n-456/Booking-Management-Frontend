@@ -45,3 +45,7 @@
     background-color: #212529;
     border-color: #212529;
   }
+
+  .dropdown-item:active {
+    background-color: #3a3a3a;
+  }
