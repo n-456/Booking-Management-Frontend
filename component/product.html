@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="../css/spinner.css">
+    <link rel="stylesheet" href="../css/product.css">
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+    <div id="spinner"></div>
+
+    <div class="d-flex justify-content-end align-items-center gap-3 sticky-top bg-light" style="height: 150px;">
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#productModal">
+            Thêm sản phẩm
+        </button>
+
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#productModal">
+            Sửa sản phẩm
+        </button>
+
+        <button class="btn btn-dark">Xoá sản phẩm</button>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="productModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5">Thêm/sửa sản phẩm</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+
+
+                    <!-- form -->
+                    <form id="signin-form" novalidate>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Tên:</label>
+                            <input type="text" class="form-control" id="name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="category" class="form-label">Loại:</label>
+                            <input type="text" class="form-control" id="category">
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Đơn giá bán:</label>
+                            <input type="number" class="form-control" id="price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cost" class="form-label">Chi phí:</label>
+                            <input type="number" class="form-control" id="cost">
+                        </div>
+                        <div class="mb-3">
+                            <label for="discontinue" class="form-label">Ngừng bán:</label>
+                            <input type="checkbox" id="discontinue" name="discontinue" value="">
+                        </div>
+                        <div class="mb-3">
+                            <label for="stock" class="form-label">Tồn kho:</label>
+                            <input type="number" class="form-control" id="stock">
+                        </div>
+                        <div class="mb-3">
+                            <label for="img" class="form-label">Hình ảnh:</label>
+                            <input type="name" class="form-control" id="img">
+                        </div>
+
+                        <div class="mt-5">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Huỷ</button>
+                            <button type="submit" class="btn btn-dark py-2">Gửi</button>
+                        </div>
+
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr class="table-dark sticky-top text-center align-middle" style="top: 150px;">
+                <th scope="col">ID</th>
+                <th scope="col">Tên</th>
+                <th scope="col">Loại</th>
+                <th scope="col">Đơn giá bán</th>
+                <th scope="col">Chi phí nhập</th>
+                <th scope="col">Ngừng bán</th>
+                <th scope="col">Tồn kho</th>
+                <th scope="col">Hình ảnh</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr id="row-product-template" style="display: none;">
+                <th scope="row" class="text-center align-middle product-id">1</th>
+                <td class="product-name text-start align-middle">Name</td>
+                <td class="product-category text-start align-middle">Category</td>
+                <td class="product-unit-price text-end align-middle">Unit Price</td>
+                <td class="product-cost text-end align-middle">Cost</td>
+                <td class="product-discontinue text-center align-middle">Discontinue</td>
+                <td class="product-stock text-end align-middle">Stock</td>
+                <td><img src="" alt="" class="product-img" style="width: 50px;"></td>
+            </tr>
+
+        </tbody>
+    </table>
+
+
+    <div id="pagination">
+        <nav>
+            <ul class="pagination justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">  </script>
+    <script src="../js/spinner.js"></script>
+    <script src="../js/product.js"></script>
+</body>
+
+</html>
