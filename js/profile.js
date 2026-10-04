@@ -67,8 +67,8 @@ async function updateCustomer(customerData) {
 async function info() {
     try {
         let id = JSON.parse(localStorage.getItem("user")).id;
-        // const response = await fetch(`${urlBE}/api/auth/profile`, { credentials: 'include' });
-        const response = await fetch(`${urlBE}/customers/${id}`);
+        const response = await fetch(`${urlBE}/api/auth/profile`, { credentials: 'include' });
+        // const response = await fetch(`${urlBE}/customers/${id}`);
 
         if (!response.ok) {
             alert("Lỗi không lấy được thông tin");

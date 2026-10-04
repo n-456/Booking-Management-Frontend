@@ -8,7 +8,7 @@ document.getElementById("sign_out").addEventListener(
 function handleSignOut() {
     fetch(`${urlBE}/api/auth/logout`, {
         method: 'POST',
-        // credentials: 'include'
+        credentials: 'include'
     })
         .then(response => {
             if (response.status == 200) {
