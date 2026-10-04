@@ -1,12 +1,5 @@
-urlBE = "https://booking-management-backend-kdwt.onrender.com"
+const urlBE = "https://booking-management-backend-kdwt.onrender.com";
 
-function w3_open() {
-    document.getElementById("mySidebar").style.display = "block";
-}
-
-function w3_close() {
-    document.getElementById("mySidebar").style.display = "none";
-}
 
 
 // Định nghĩa hàm kiểm tra trạng thái đăng nhập
