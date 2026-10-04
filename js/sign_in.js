@@ -1,5 +1,5 @@
-// const urlBE = "https://booking-management-backend-kdwt.onrender.com"
-const urlBE = "http://localhost:8080"
+const urlBE = "https://booking-management-backend-kdwt.onrender.com"
+// const urlBE = "http://localhost:8080"
 
 document.getElementById("signin-form").addEventListener(
     "submit",
@@ -16,13 +16,16 @@ document.getElementById("signin-form").addEventListener(
 )
 
 async function sign_in(customerData) {
+
+    $('#spinner').show();
+    
     try {
         const response = await fetch(`${urlBE}/api/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            credentials: 'include',
+            // credentials: 'include',
             body: JSON.stringify(customerData)
         })
 

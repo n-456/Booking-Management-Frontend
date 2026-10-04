@@ -1,5 +1,5 @@
-// const urlBE = "https://booking-management-backend-kdwt.onrender.com"
-const urlBE = "http://localhost:8080"
+const urlBE = "https://booking-management-backend-kdwt.onrender.com"
+// const urlBE = "http://localhost:8080"
 const form = document.querySelector('form');
 
 
