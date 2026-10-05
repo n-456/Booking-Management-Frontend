@@ -1,135 +1,410 @@
 const urlBE = "https://booking-management-backend-kdwt.onrender.com";
-
 // const urlBE = "http://localhost:8080";
 
-document.addEventListener("DOMContentLoaded", async () => {
+const form = document.querySelector("form");
+const tbody = document.querySelector("tbody");
+const modalEl = document.getElementById("productModal");
 
-    try {
-        const res = await getProducts(0);
-
-        if (!res) {
-            console.error("Không lấy được dữ liệu products");
-            return;
-        }
-
-        const products = await res.json();
-
-        console.log("products:", products);
-
-        renderLi(products.totalPages);
-        renderProducts(products.content);
+let editMode = false;
 
 
-    } catch (error) {
-        console.error("Lỗi khi tải dữ liệu khởi tạo:", error);
-    }
+document.addEventListener("DOMContentLoaded", () => {
+    loadProducts(0);
 });
 
 
-// Bắt sự kiện click pagination
-document.addEventListener("click", async function (e) {
+async function loadProducts(page) {
+    try {
+        const response = await fetch(
+            `${urlBE}/products?page=${page}`
+        );
+
+        if (!response.ok) {
+            throw new Error(`GET lỗi: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        clearProducts();
+        renderProducts(data.content);
+        renderPagination(data.totalPages, page);
+
+    } catch (error) {
+        console.error("Lỗi load products:", error);
+    }
+}
+
+
+document.addEventListener("click", async (e) => {
+
     const link = e.target.closest(".page-link");
 
     if (!link) return;
 
     e.preventDefault();
 
-    const pageIndex = Number(link.dataset.page);
-    console.log("pageIndex:", pageIndex);
+    const page = Number(link.dataset.page);
 
-    try {
-        const res = await getProducts(pageIndex);
+    // Bỏ chọn dòng cũ khi chuyển trang
+    removeActiveRow();
 
-        if (!res) return;
-
-        const data = await res.json();
-
-        // Xóa các row sản phẩm, không xóa template
-        document
-            .querySelectorAll("tbody tr:not(#row-product-template)")
-            .forEach(row => row.remove());
-
-        renderProducts(data.content);
-
-        renderLi(data.totalPages, pageIndex);
-
-    } catch (error) {
-        console.error("Lỗi khi đổi trang:", error);
-    }
+    await loadProducts(page);
 });
 
 
+function renderPagination(totalPages, currentPage) {
 
-async function getProducts(pageNumber) {
-    try {
-        const response = await fetch(
-            `${urlBE}/products?page=${pageNumber}`
-        );
+    const pagination =
+        document.querySelector(".pagination");
 
-        if (!response.ok) {
-            console.error(
-                "Lỗi get products HTTP status:",
-                response.status
-            );
+    if (!pagination) return;
 
-            return null;
-        }
-
-        return response;
-
-    } catch (error) {
-        console.error("Lỗi kết nối:", error);
-        return null;
-    }
-}
-
-
-function renderLi(totalPages, currentPage) {
-    const paginationEl = document.querySelector(".pagination");
-
-    if (!paginationEl) return;
-
-    let list = "";
+    let html = "";
 
     for (let p = 0; p < totalPages; p++) {
-        list += `
+
+        html += `
             <li class="page-item ${p === currentPage ? "active" : ""}">
-                <a class="page-link" href="#" data-page="${p}">
+                <a
+                    class="page-link"
+                    href="#"
+                    data-page="${p}">
                     ${p + 1}
                 </a>
             </li>
         `;
     }
 
-    paginationEl.innerHTML = list;
+    pagination.innerHTML = html;
 }
 
+
+function clearProducts() {
+
+    document
+        .querySelectorAll(
+            "tbody tr:not(#row-product-template)"
+        )
+        .forEach(row => row.remove());
+}
 
 
 function renderProducts(products) {
-    const template = document.getElementById("row-product-template");
-    const tbody = document.querySelector("tbody");
+
+    const template =
+        document.getElementById("row-product-template");
 
     products.forEach(product => {
-        const rowElement = template.cloneNode(true);
 
-        rowElement.removeAttribute("id");
-        rowElement.style.display = "";
+        const row = template.cloneNode(true);
 
-        rowElement.querySelector(".product-id").textContent = product.id;
-        rowElement.querySelector(".product-name").textContent = product.name;
-        rowElement.querySelector(".product-category").textContent = product.category;
-        rowElement.querySelector(".product-unit-price").textContent = product.unitPrice;
-        rowElement.querySelector(".product-cost").textContent = product.cost;
-        rowElement.querySelector(".product-discontinue").textContent = product.discontinue;
-        rowElement.querySelector(".product-stock").textContent = product.stock;
+        row.removeAttribute("id");
+        row.style.display = "";
 
-        const imgEl = rowElement.querySelector(".product-img");
+        row.querySelector(".product-id").textContent = product.id;
+        row.querySelector(".product-name").textContent = product.name;
+        row.querySelector(".product-category").textContent = product.category;
+        row.querySelector(".product-unit-price").textContent = product.unitPrice;
+        row.querySelector(".product-cost").textContent = product.cost;
+        row.querySelector(".product-discontinued").textContent = product.discontinued ? "x" : "";
+        row.querySelector(".product-stock").textContent = product.stock;
 
-        if (imgEl) {
-            imgEl.src = product.img;
+        const img =
+            row.querySelector(".product-img");
+
+        if (img) {
+            img.src = product.img;
         }
 
-        tbody.appendChild(rowElement);
+        tbody.appendChild(row);
     });
 }
+
+
+tbody.addEventListener("click", (e) => {
+
+    const row = e.target.closest("tr");
+
+    if (!row) return;
+
+    if (row.id === "row-product-template") {
+        return;
+    }
+
+    removeActiveRow();
+
+    row.classList.add("active-tr");
+});
+
+
+function removeActiveRow() {
+
+    const row =
+        tbody.querySelector(".active-tr");
+
+    if (row) {
+        row.classList.remove("active-tr");
+    }
+}
+
+
+function getFormData() {
+
+    return {
+        name: document.getElementById("name").value,
+        category: document.getElementById("category").value,
+        unitPrice: document.getElementById("price").value,
+        cost: document.getElementById("cost").value,
+        discontinued:
+            document.getElementById("discontinued").checked,
+        stock: document.getElementById("stock").value,
+        img: document.getElementById("img").value
+    };
+}
+
+document
+    .getElementById("addProduct")
+    .addEventListener("click", () => {
+
+        editMode = false;
+
+        form.reset();
+        form.classList.remove("was-validated");
+
+        bootstrap.Modal
+            .getOrCreateInstance(modalEl)
+            .show();
+    });
+
+
+document
+    .getElementById("updateProduct")
+    .addEventListener("click", () => {
+
+        const row =
+            tbody.querySelector(".active-tr");
+
+        if (!row) {
+            alert("Vui lòng chọn sản phẩm cần sửa");
+            return;
+        }
+
+        editMode = true;
+
+        // Đưa dữ liệu sản phẩm vào form
+        document.getElementById("name").value =
+            row.querySelector(".product-name").innerText;
+
+        document.getElementById("category").value =
+            row.querySelector(".product-category").innerText;
+
+        document.getElementById("price").value =
+            row.querySelector(".product-unit-price").innerText;
+
+        document.getElementById("cost").value =
+            row.querySelector(".product-cost").innerText;
+
+        document.getElementById("discontinued").checked =
+            row.querySelector(".product-discontinued").innerText.trim() === "x";
+
+        document.getElementById("stock").value =
+            row.querySelector(".product-stock").innerText;
+
+        const img = row.querySelector(".product-img");
+        document.getElementById("img").value = img ? img.src : "";
+
+        form.classList.remove("was-validated");
+
+        bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    });
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    if (!form.checkValidity()) {
+        form.classList.add("was-validated");
+        return;
+    }
+
+    form.classList.remove("was-validated");
+
+    const data = getFormData();
+
+    if (editMode) {
+        await updateProduct(data);
+    } else {
+        await addProduct(data);
+    }
+});
+
+async function addProduct(productData) {
+
+    $("#spinner").show();
+
+    try {
+
+        const response = await fetch(
+            `${urlBE}/products`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(productData)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Thêm thất bại: ${response.status}`
+            );
+        }
+
+        const pageCount =
+            document.querySelectorAll(
+                ".pagination .page-link"
+            ).length;
+
+        await loadProducts(
+            Math.max(pageCount - 1, 0)
+        );
+
+        closeModal();
+
+    } catch (error) {
+
+        console.error("Lỗi thêm:", error);
+
+    } finally {
+
+        $("#spinner").hide();
+    }
+}
+
+
+async function updateProduct(productData) {
+
+    const row =
+        tbody.querySelector(".active-tr");
+
+    if (!row) {
+        alert("Không tìm thấy sản phẩm");
+        return;
+    }
+
+    const id =
+        row.querySelector(".product-id").innerText;
+
+    $("#spinner").show();
+
+    try {
+
+        const response = await fetch(
+            `${urlBE}/products/${id}`,
+            {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(productData)
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Sửa thất bại: ${response.status}`
+            );
+        }
+
+        row.querySelector(".product-name").textContent = productData.name;
+        row.querySelector(".product-category").textContent = productData.category;
+        row.querySelector(".product-unit-price").textContent = productData.unitPrice;
+        row.querySelector(".product-cost").textContent = productData.cost;
+        row.querySelector(".product-discontinued").textContent = productData.discontinued ? "x" : "";
+        row.querySelector(".product-stock").textContent = productData.stock;
+        const img =
+            row.querySelector(".product-img");
+
+        if (img) {
+            img.src = productData.img;
+        }
+
+        closeModal();
+
+    } catch (error) {
+
+        console.error("Lỗi sửa:", error);
+
+    } finally {
+
+        $("#spinner").hide();
+    }
+}
+
+document
+    .getElementById("deleteProduct")
+    .addEventListener("click", async () => {
+
+        const row =
+            tbody.querySelector(".active-tr");
+
+        if (!row) {
+            alert("Vui lòng chọn sản phẩm cần xóa");
+            return;
+        }
+
+        await deleteProduct(row);
+    });
+
+
+async function deleteProduct(row) {
+
+    const id =
+        row.querySelector(".product-id").innerText;
+
+    try {
+
+        const response = await fetch(
+            `${urlBE}/products/${id}`,
+            {
+                method: "DELETE"
+            }
+        );
+
+        if (!response.ok) {
+            throw new Error(
+                `Xóa thất bại: ${response.status}`
+            );
+        }
+
+        row.remove();
+
+    } catch (error) {
+
+        console.error("Lỗi xóa:", error);
+    }
+}
+
+function closeModal() {
+
+    bootstrap.Modal
+        .getOrCreateInstance(modalEl)
+        .hide();
+}
+
+modalEl.addEventListener(
+    "hidden.bs.modal",
+    () => {
+
+        form.reset();
+
+        form.classList.remove(
+            "was-validated"
+        );
+
+        editMode = false;
+
+        removeActiveRow();
+    }
+);

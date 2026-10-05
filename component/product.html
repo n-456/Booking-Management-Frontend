@@ -16,15 +16,15 @@
     <div id="spinner"></div>
 
     <div class="d-flex justify-content-end align-items-center gap-3 sticky-top bg-light" style="height: 150px;">
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#productModal">
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#productModal" id="addProduct">
             Thêm sản phẩm
         </button>
 
-        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#productModal">
+        <button type="button" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#productModal" id="updateProduct">
             Sửa sản phẩm
         </button>
 
-        <button class="btn btn-dark">Xoá sản phẩm</button>
+        <button class="btn btn-dark" id="deleteProduct">Xoá sản phẩm</button>
     </div>
 
     <!-- Modal -->
@@ -32,7 +32,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5">Thêm/sửa sản phẩm</h1>
+                    <h1 class="modal-title fs-5">Cập nhật sản phẩm</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -43,27 +43,42 @@
 
                         <div class="mb-3">
                             <label for="name" class="form-label">Tên:</label>
-                            <input type="text" class="form-control" id="name">
+                            <input type="text" class="form-control" id="name" required>
+                            <div class="invalid-feedback">
+                                Hãy nhập tên
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="category" class="form-label">Loại:</label>
-                            <input type="text" class="form-control" id="category">
+                            <input type="text" class="form-control" id="category" required>
+                            <div class="invalid-feedback">
+                                Hãy nhập loại
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="price" class="form-label">Đơn giá bán:</label>
-                            <input type="number" class="form-control" id="price">
+                            <input type="number" class="form-control" id="price" required>
+                            <div class="invalid-feedback">
+                                Hãy nhập giá bán
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="cost" class="form-label">Chi phí:</label>
-                            <input type="number" class="form-control" id="cost">
+                            <input type="number" class="form-control" id="cost" required>
+                            <div class="invalid-feedback">
+                                Hãy nhập chi phí
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label for="discontinue" class="form-label">Ngừng bán:</label>
-                            <input type="checkbox" id="discontinue" name="discontinue" value="">
+                            <label for="discontinued" class="form-label">Ngừng bán:</label>
+                            <input type="checkbox" id="discontinued" name="discontinued" value="">
                         </div>
                         <div class="mb-3">
                             <label for="stock" class="form-label">Tồn kho:</label>
-                            <input type="number" class="form-control" id="stock">
+                            <input type="number" class="form-control" id="stock" required>
+                            <div class="invalid-feedback">
+                                Hãy nhập số lượng tồn kho
+                            </div>
                         </div>
                         <div class="mb-3">
                             <label for="img" class="form-label">Hình ảnh:</label>
@@ -104,7 +119,7 @@
                 <td class="product-category text-start align-middle">Category</td>
                 <td class="product-unit-price text-end align-middle">Unit Price</td>
                 <td class="product-cost text-end align-middle">Cost</td>
-                <td class="product-discontinue text-center align-middle">Discontinue</td>
+                <td class="product-discontinued text-center align-middle">Discontinued</td>
                 <td class="product-stock text-end align-middle">Stock</td>
                 <td><img src="" alt="" class="product-img" style="width: 50px;"></td>
             </tr>
