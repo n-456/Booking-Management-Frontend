@@ -34,7 +34,7 @@ async function sign_in(customerData) {
         } else {
             const currentCustomer = await response.json();
             localStorage.setItem("user", JSON.stringify(currentCustomer));
-            transPage("http://localhost:5500/index.html");
+            transPage("../index.html");
         }
 
     } catch (error) {

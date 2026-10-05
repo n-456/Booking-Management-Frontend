@@ -64,7 +64,8 @@ async function addCustomer(customerData) {
         form.reset();
         localStorage.setItem("user", JSON.stringify(newCustomer));
 
-        transPage("http://localhost:5500/index.html");
+        transPage("../index.html");
+
 
     } catch (error) {
         console.error("Lỗi: ", error);
