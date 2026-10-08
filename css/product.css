@@ -1,3 +1,15 @@
 tr.active-tr {
     border-block: 3px solid black;
 }
+
+.pagination .page-link {
+    color: #212529;
+    border-radius: 0.4rem;
+    margin: 0 3px;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #212529;
+    color: white;
+    border-color: #212529;
+}
