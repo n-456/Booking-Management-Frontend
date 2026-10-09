@@ -206,6 +206,27 @@ async function deleteProduct(id, row) {
 }
 
 
+// Bấm nút Xóa sản phẩm
+document.getElementById("deleteProduct").addEventListener("click", () => {
+    const row = tbody.querySelector(".active-tr");
+    if (!row) {
+        showInfoModal("Vui lòng chọn sản phẩm cần xóa", "OK");
+        return;
+    }
+
+    showInfoModal(
+        "Bạn có chắc chắn muốn xóa sản phẩm này không?", 
+        "Huỷ", 
+        "OK", 
+        async () => {
+            const id = row.querySelector(".product-id").innerText;
+            await deleteProduct(id, row);
+        }
+    );
+});
+
+
+
 
 // Hiển thị sản phẩm vào Table
 function renderProducts(products) {
