@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Tài khoản</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/spinner.css">
+  <script src="https://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/spinner.js"></script>
+</head>
+
+<body class="vh-100">
+  <!-- Spinner -->
+  <div id="spinner"></div>
+
+
+  <div class="d-flex justify-content-center align-items-center h-100 bg-secondary">
+    <div class="w-50 p-5 rounded-5 shadow-lg bg-light">
+
+      <form class="row g-3 needs-validation" novalidate>
+        <h3 class="mb-4 text-center">Thông tin tài khoản</h3>
+        <div class="col-12">
+          <div class="mb-2">
+            <label for="name" class="form-label">ID:</label>
+            <input type="text" class="form-control" id="idNumber" name="idNumber" disabled>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="mb-2">
+            <label for="name" class="form-label">Tên:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+            <div class="invalid-feedback">
+              Hãy nhập tên
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="mb-2">
+            <label for="phone" class="form-label">SĐT:</label>
+            <span class="form-text">(ít nhất 10 số)</span>
+            <input type="tel" class="form-control" id="phone" name="phone" required minlength="10">
+            <div class="invalid-feedback">
+              Số điện thoại từ 10 số
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="mb-2">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+            <div class="invalid-feedback">
+              Hãy nhập đúng định dạng email
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12">
+          <div class="mb-2">
+            <label for="pwd" class="form-label">Mật khẩu:</label>
+            <span class="form-text">(ít nhất 5 ký tự)</span>
+            <input type="password" class="form-control" id="pwd" name="pswd" required minlength="5">
+            <div class="invalid-feedback">
+              Mật khẩu từ 5 ký tự
+            </div>
+          </div>
+        </div>
+
+
+        <div class="col-6 mt-5">
+          <a href="../index.html" type="button" class="btn btn-secondary w-100" id="cancel">Quay về</a>
+        </div>
+        <div class="col-6 mt-5">
+          <button type="submit" class="btn btn-dark w-100" id="save">Lưu</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/profile.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Đăng nhập</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="../css/spinner.css">
+  <script src="https://code.jquery.com/jquery-latest.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="../js/spinner.js"></script>
+  <script type="module" src="../js/sign_in.js"></script>
+</head>
+
+<body class="vh-100 bg-secondary">
+
+  <!-- Spinner -->
+  <div id="spinner"></div>
+
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <div class="container" style="max-width: 500px;">
+      <div class="border border-dark p-5 bg-body rounded-5 shadow-lg">
+
+        <h3 class="mb-4 text-center">ĐĂNG NHẬP</h3>
+        
+        <form id="signin-form" novalidate>
+          
+          <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="email" pattern=".+@.+\..+" required>
+          </div>
+          
+          <div class="mb-4">
+            <label for="pwd" class="form-label">Mật khẩu:</label>
+            <input type="password" class="form-control" id="pwd" required>
+          </div>
+     
+          <div class="error-message text-danger small mb-3 min-vh-0"></div>
+
+          <button type="submit" class="btn btn-dark w-100 py-2">Gửi</button>
+          
+        </form>
+        
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>
