@@ -7,13 +7,14 @@
     <title>Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css" integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg==" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="../css/spinner.css">
     <link rel="stylesheet" href="../css/product.css">
     <script src="https://code.jquery.com/jquery-latest.js"></script>
 </head>
 
 <body>
-    <div id="spinner"></div>
+    <!-- <div id="spinner"></div> -->
 
     <div class="d-flex justify-content-end align-items-center gap-3 sticky-top bg-light" style="height: 150px;">
         <form class="d-flex" id="search">
@@ -117,7 +118,7 @@
     <table class="table table-bordered table-striped table-hover">
         <thead>
             <tr class="table-dark sticky-top text-center align-middle" style="top: 150px;">
-                <th scope="col">ID</th>
+                <th scope="col" style="display: none;">ID</th>
                 <th scope="col">Tên</th>
                 <th scope="col">Loại</th>
                 <th scope="col">Đơn giá bán</th>
@@ -125,11 +126,12 @@
                 <th scope="col">Ngừng bán</th>
                 <th scope="col">Tồn kho</th>
                 <th scope="col">Hình ảnh</th>
+                <th scope="col">Xoá</th>
             </tr>
         </thead>
         <tbody>
             <tr id="row-product-template" style="display: none;">
-                <th scope="row" class="text-center align-middle product-id">1</th>
+                <th scope="row" class="text-center align-middle product-id" style="display: none;">1</th>
                 <td class="product-name text-start align-middle">Name</td>
                 <td class="product-category text-start align-middle">Category</td>
                 <td class="product-unit-price text-end align-middle">Unit Price</td>
@@ -137,6 +139,7 @@
                 <td class="product-discontinued text-center align-middle">Discontinued</td>
                 <td class="product-stock text-end align-middle">Stock</td>
                 <td><img src="" alt="" class="product-img" style="width: 50px;"></td>
+                <td class="product-btn-delete text-center text-align"><button class="btn btn-danger" onclick="deleteButton()"><i class="fa-solid fa-trash"></i></button></td>
             </tr>
 
         </tbody>
