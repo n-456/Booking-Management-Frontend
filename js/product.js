@@ -1,5 +1,5 @@
-const urlBE = "https://booking-management-backend-kdwt.onrender.com";
-// const urlBE = "http://localhost:8080";
+// const urlBE = "https://booking-management-backend-kdwt.onrender.com";
+const urlBE = "http://localhost:8080";
 
 const form = document.querySelector("#product-form");
 const search = document.querySelector("#search");
@@ -14,10 +14,30 @@ function formatNumber(num) {
 
 
 // Khi DOM sẵn sàng, tải trang đầu tiên
-document.addEventListener("DOMContentLoaded", () => {
-    loadProducts(0);
-    $("#spinner>div").hide();
+// document.addEventListener("DOMContentLoaded", async() => {
+//     document.getElementById("spinner").style.display = "";
+//     await loadProducts(0);
+//     document.getElementById("spinner").style.display = "none";
+// });
+
+document.addEventListener("DOMContentLoaded", async () => {
+    // const spinner = document.getElementById("spinnerOfTable");
+    openModal();
+
+    try {
+        // if (spinner) spinner.style.display = "block";
+
+        await loadProducts(0);
+
+    } catch (error) {
+        console.error("Lỗi khi tải sản phẩm:", error);
+    } finally {
+        // if (spinner) spinner.style.display = "none";
+        closeModal();
+    }
 });
+
+
 
 // Chuyển trang khi bấm nút phân trang
 document.addEventListener("click", async (e) => {
@@ -157,18 +177,23 @@ search.addEventListener("submit", async (e) => {
 async function loadProducts(page, productName = "") {
     try {
 
-        $("#spinner>div").show();
+        // document.getElementById("spinnerOfTable").style.display = "";
+        openModal();
+
 
         document.getElementById("info").innerText = "";
 
         const response = await fetch(`${urlBE}/products?page=${page}&name=${productName}`);
+        // document.getElementById("spinner").style.display = "none";
+        closeModal()
+
+        console.log("hide")
         if (!response.ok) throw new Error(`GET lỗi: ${response.status}`);
 
         const data = await response.json();
 
         clearProducts();
 
-        // SỬA LỖI KIỂM TRA ĐĂNG KÝ: Chấp nhận cả cấu trúc Spring Boot Pageable (data.content) và Mảng thuần (data)
         const productsList = data.content !== undefined ? data.content : data;
 
         if (!productsList || productsList.length == 0) {
@@ -188,7 +213,8 @@ async function loadProducts(page, productName = "") {
     } catch (error) {
         console.error("Lỗi load products:", error);
     } finally {
-        $("#spinner>div").hide();
+        // document.getElementById("spinner").style.display = "none";
+        closeModal();
     }
 }
 
@@ -196,7 +222,9 @@ async function loadProducts(page, productName = "") {
 
 // Thêm sản phẩm
 async function addProduct(productData) {
-    $("#spinner>div").show();
+    // document.getElementById("spinner").style.display = "";
+    openModal();
+
     try {
         const response = await fetch(`${urlBE}/products`, {
             method: "POST",
@@ -212,7 +240,8 @@ async function addProduct(productData) {
     } catch (error) {
         console.error("Lỗi thêm:", error);
     } finally {
-        $("#spinner>div").hide();
+        // document.getElementById("spinner").style.display = "none";
+        closeModal();
     }
 }
 
@@ -225,7 +254,9 @@ async function updateProduct(productData) {
     }
 
     const id = row.querySelector(".product-id").innerText;
-    $("#spinner>div").show();
+    // document.getElementById("spinner").style.display = "";
+    openModal();
+
 
     try {
         const response = await fetch(`${urlBE}/products/${id}`, {
@@ -241,13 +272,16 @@ async function updateProduct(productData) {
     } catch (error) {
         console.error("Lỗi sửa:", error);
     } finally {
-        $("#spinner>div").hide();
+        // document.getElementById("spinner").style.display = "none";
+        closeModal();
     }
 }
 
 // Xóa sản phẩm
 async function deleteProduct(id, row) {
-    $("#spinner>div").show();
+    // document.getElementById("spinner").style.display = "";
+    openModal()
+
     try {
         const response = await fetch(`${urlBE}/products/${id}`, {
             method: "DELETE"
@@ -255,14 +289,15 @@ async function deleteProduct(id, row) {
 
         if (!response.ok) throw new Error(`Xóa thất bại: ${response.status}`);
 
-        row.remove();
+        // row.remove();
         const activePageLink = document.querySelector(".pagination .page-item.active .page-link");
         const currentPage = activePageLink ? Number(activePageLink.dataset.page) : 0;
         await loadProducts(currentPage);
     } catch (error) {
         console.error("Lỗi xóa:", error);
     } finally {
-        $("#spinner>div").hide();
+        // document.getElementById("spinner").style.display = "none";
+        closeModal()
     }
 }
 
@@ -310,6 +345,7 @@ function renderProducts(products) {
         row.style.display = "";
 
         row.querySelector(".product-id").textContent = product.id;
+        let id = product.id;
         row.querySelector(".product-id").style.display = "none";
         row.querySelector(".product-name").textContent = product.name;
         row.querySelector(".product-category").textContent = product.category;
@@ -322,12 +358,14 @@ function renderProducts(products) {
         if (img) img.src = product.img;
 
         row.querySelector(".product-btn-delete").addEventListener('click', function (event) {
-            deleteButton(product.id, row);
+            deleteButton(id, row);
+            console.log("id: " + id);
         });
 
         tbody.appendChild(row);
     });
-    $("#spinner>div").hide();
+    // document.getElementById("spinner").style.display = "none";
+    closeModal()
 }
 
 // Hiển thị các nút bấm phân trang
@@ -356,7 +394,7 @@ function renderPagination(totalPages, currentPage) {
 
     html += `
         <li class="page-item">
-            <a class="page-link" href="#" aria-label="Last" data-page="${p-1}">
+            <a class="page-link" href="#" aria-label="Last" data-page="${p - 1}">
                 <span aria-hidden="true">&raquo;</span>
             </a>
         </li>
@@ -364,7 +402,8 @@ function renderPagination(totalPages, currentPage) {
 
     pagination.innerHTML = html;
 
-    $("#spinner>div").hide();
+    // document.getElementById("spinner").style.display = "none";
+    closeModal()
 }
 
 
