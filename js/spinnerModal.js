@@ -29,5 +29,4 @@ async function closeModal() {
         await new Promise(resolve => setTimeout(resolve, 50));
     }
     $('#spinnerModal').addClass('d-none');
-    console.log("da hide")
 }
