@@ -1,9 +1,14 @@
-document.getElementById("sign_out").addEventListener(
-    "click",
-    () => {
+document.addEventListener("click", (e) => {
+    const signOutBtn = e.target.closest("#sign_out");
+    if (!signOutBtn) return;
+
+    e.preventDefault();
+    console.log("Đã bấm đăng xuất");
+    
+    if (typeof handleSignOut === "function") {
         handleSignOut();
     }
-)
+});
 
 function handleSignOut() {
     fetch(`${urlBE}/api/auth/logout`, {
