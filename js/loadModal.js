@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#spinner').load('../component/spinner.html', function (response, status, xhr) {
+    $('#load').load('../component/loadModal.html', function (response, status, xhr) {
         if (status == "error") {
             console.log("Lỗi load file: " + xhr.status + " " + xhr.statusText);
         }
@@ -7,12 +7,12 @@ $(document).ready(function () {
 });
 
 $(window).on('pageshow', function(event) {
-    $('#spinner').addClass('hide');
+    $('#load').addClass('hide');
 });
 
 // Fade out + chuyển trang
 function transPage(href) {    
-    $('#spinner').removeClass('hide');
+    $('#load').removeClass('hide');
     setTimeout(() => {
         window.location.href = href;
     }, 400);
@@ -20,7 +20,7 @@ function transPage(href) {
 
 $(function() {
     // Fade in
-    $('#spinner').addClass('hide');
+    $('#load').addClass('hide');
 
     // Chặn chuyển trang mặc định
     $(document).on('click', '.page-link-custom', function(e) {

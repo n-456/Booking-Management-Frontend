@@ -33,7 +33,7 @@ function submitForm() {
 
 async function addCustomer(customerData) {
 
-    $('#spinner').show();
+    $('#load').show();
 
     try {
         const response = await fetch(`${urlBE}/customers`, {

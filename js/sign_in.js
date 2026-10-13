@@ -17,7 +17,7 @@ document.getElementById("signin-form").addEventListener(
 
 async function sign_in(customerData) {
 
-    $('#spinner').show();
+    $('#load').show();
     
     try {
         const response = await fetch(`${urlBE}/api/auth/login`, {

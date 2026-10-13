@@ -6,16 +6,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/spinner.css">
+  <link rel="stylesheet" href="../css/loadModal.css">
+  <link rel="stylesheet" href="../css/header_footer.css">
   <script src="https://code.jquery.com/jquery-latest.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="../js/spinner.js"></script>
+  <script src="../js/loadModal.js"></script>
 </head>
 
 <body class="vh-100">
-  <!-- Spinner -->
-  <div id="spinner"></div>
+  <!-- Load -->
+  <div id="load"></div>
 
+  <!-- Header -->
+  <header id="header"></header>
 
   <div class="d-flex justify-content-center align-items-center h-100 bg-secondary">
     <div class="w-50 p-5 rounded-5 shadow-lg bg-light">
@@ -71,6 +74,11 @@
     </div>
   </div>
 
+  <!-- Footer -->
+  <footer id="footer" style="display: none;"></footer>
+
+
+  <script src="../js/header_footer.js"></script>
   <script src="../js/sign_up.js"></script>
 </body>
 

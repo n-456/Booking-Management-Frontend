@@ -1,4 +1,4 @@
-#spinner {
+#load {
     position: fixed;
     inset: 0;
     background: white;
@@ -7,7 +7,7 @@
     transition: opacity 0.4s ease;
 }
 
-#spinner.hide {
+#load.hide {
     opacity: 0;
     pointer-events: none;
 }

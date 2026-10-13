@@ -33,7 +33,7 @@ function submitForm() {
 
 async function updateCustomer(customerData) {
 
-    $('#spinner').show();
+    $('#load').show();
     let id = JSON.parse(localStorage.getItem("user")).id;
 
     try {
