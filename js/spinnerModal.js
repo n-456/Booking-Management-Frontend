@@ -1,19 +1,33 @@
+let spinnerModal = null
+
 $(document).ready(function () {
-    $('#spinnerOfTable').load('../component/spinnerModal.html', function (response, status, xhr) {
+    $('#spinner').load('../component/spinnerModal.html', function (response, status, xhr) {
         if (status == "error") {
             console.log("Lỗi load file: " + xhr.status + " " + xhr.statusText);
+            return;
+        }
+        
+        const spinnerModalElement = document.getElementById('spinnerModal');
+        if (spinnerModalElement) {
+            spinnerModal = new bootstrap.Modal(spinnerModalElement, {
+                backdrop: false,
+                keyboard: false
+            });
         }
     });
 });
 
-function closeModal(){
-    // const myModal = new bootstrap.Modal(document.getElementById('spinnerOfTable'));
-    // myModal.hide();
-
-    // document.querySelectorAll(".modal-backdrop.show").style.display = 'none';
+async function openModal() {
+    while (!spinnerModal) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    $('#spinnerModal').removeClass('d-none');
 }
 
-function openModal(){
-    // const myModal = new bootstrap.Modal(document.getElementById('spinnerOfTable'));
-    // myModal.show();
+async function closeModal() {
+    while (!spinnerModal) {
+        await new Promise(resolve => setTimeout(resolve, 50));
+    }
+    $('#spinnerModal').addClass('d-none');
+    console.log("da hide")
 }

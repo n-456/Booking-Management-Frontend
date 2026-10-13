@@ -1,0 +1,7 @@
+#spinnerModal .modal-dialog, 
+#spinnerModal .modal-content,
+#spinnerModal .modal-body {
+    background: none;
+    border: none;
+    text-align: center;
+}
