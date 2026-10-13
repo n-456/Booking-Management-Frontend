@@ -10,21 +10,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
         integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
         crossorigin="anonymous" referrerpolicy="no-referrer">
-    <link rel="stylesheet" href="../css/spinner.css">
+    <link rel="stylesheet" href="../css/loadModal.css">
     <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/spinnerModal.css">
     <link rel="stylesheet" href="../css/header_footer.css">
     <script src="https://code.jquery.com/jquery-latest.js"></script>
 </head>
 
 <body>
-    <div id="spinner"></div>
-    <script src="../js/spinner.js"></script>
+    <div id="load"></div>
+    <script src="../js/loadModal.js"></script>
 
     <header id="header"></header>
 
-    <main class="pt-3">
+    <main class="pt-5">
         <div class="d-flex justify-content-end align-items-center gap-3 sticky-top bg-light"
-            style="height: 100px; top: 50px;">
+            style="height: 100px; top: 50px; z-index: 11;">
             <form class="d-flex" id="search">
                 <input class="form-control me-2" type="search" placeholder="Nhập sản phẩm cần tìm" />
                 <button class="btn btn-outline-dark" type="submit">Tìm</button>
@@ -124,64 +125,43 @@
         </div>
 
 
-        <table class="table table-bordered table-striped table-hover pe-4 ps-4">
-            <!-- <div id="spinnerOfTable"> -->
+        <div class="container">
+            <table class="table table-bordered table-striped table-hover pe-4 ps-5">
+                <thead>
+                    <tr class="table-dark sticky-top text-center align-middle" style="top: 150px; z-index: 10;">
 
-                <div class="modal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title">Modal title</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="spinner-border" role="status">
-                                    <span class="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <thead>
-                <!-- <tr class="table-dark text-center align-middle"> -->
-                <tr class="table-dark sticky-top text-center align-middle" style="top: 150px;">
+                        <th scope="col" style="display: none;">ID</th>
+                        <th scope="col">Tên</th>
+                        <th scope="col">Loại</th>
+                        <th scope="col">Đơn giá bán</th>
+                        <th scope="col">Chi phí nhập</th>
+                        <th scope="col">Ngừng bán</th>
+                        <th scope="col">Tồn kho</th>
+                        <th scope="col">Hình ảnh</th>
+                        <th scope="col">Xoá</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <tr id="row-product-template" style="display: none;">
+                        <th scope="row" class="text-center align-middle product-id" style="display: none;">1</th>
+                        <td class="product-name text-start align-middle">Name</td>
+                        <td class="product-category text-start align-middle">Category</td>
+                        <td class="product-unit-price text-end align-middle">Unit Price</td>
+                        <td class="product-cost text-end align-middle">Cost</td>
+                        <td class="product-discontinued text-center align-middle">Discontinued</td>
+                        <td class="product-stock text-end align-middle">Stock</td>
+                        <td class="align-middle"><img src="" alt="" class="product-img" style="width: 50px;"></td>
+                        <td class="product-btn-delete text-center align-middle"><button class="btn btn-danger"
+                                onclick="deleteButton()"><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
 
-                    <th scope="col" style="display: none;">ID</th>
-                    <th scope="col">Tên</th>
-                    <th scope="col">Loại</th>
-                    <th scope="col">Đơn giá bán</th>
-                    <th scope="col">Chi phí nhập</th>
-                    <th scope="col">Ngừng bán</th>
-                    <th scope="col">Tồn kho</th>
-                    <th scope="col">Hình ảnh</th>
-                    <th scope="col">Xoá</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr id="row-product-template" style="display: none;">
-                    <th scope="row" class="text-center align-middle product-id" style="display: none;">1</th>
-                    <td class="product-name text-start align-middle">Name</td>
-                    <td class="product-category text-start align-middle">Category</td>
-                    <td class="product-unit-price text-end align-middle">Unit Price</td>
-                    <td class="product-cost text-end align-middle">Cost</td>
-                    <td class="product-discontinued text-center align-middle">Discontinued</td>
-                    <td class="product-stock text-end align-middle">Stock</td>
-                    <td><img src="" alt="" class="product-img" style="width: 50px;"></td>
-                    <td class="product-btn-delete text-center text-align"><button class="btn btn-danger"
-                            onclick="deleteButton()"><i class="fa-solid fa-trash"></i></button></td>
-                </tr>
+                </tbody>
+            </table>
 
-            </tbody>
-        </table>
+            <div id="spinner" class="table-responsive position-relative" style="height: 100px;"></div>
+        </div>
 
-        <div id="info" class="text-center fs-3 pt-5"></div>
-
-        <div id="pagination">
+        <div id="pagination" class="d-none">
             <nav>
                 <ul class="pagination justify-content-center">
                     <li class="page-item">
@@ -198,6 +178,7 @@
                 </ul>
             </nav>
         </div>
+        <h3 id="info-search" class="text-center p-5"></h3>
     </main>
 
     <footer id="footer"></footer>
