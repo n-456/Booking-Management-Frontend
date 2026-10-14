@@ -1,5 +1,5 @@
-// const urlBE = "https://booking-management-backend-kdwt.onrender.com";
-const urlBE = "http://localhost:8080";
+const urlBE = "https://booking-management-backend-kdwt.onrender.com";
+// const urlBE = "http://localhost:8080";
 
 const form = document.querySelector("#order-form");
 const search = document.querySelector("#search");
@@ -7,17 +7,31 @@ const tbody = document.querySelector("tbody");
 const modalEl = document.getElementById("orderModal");
 const paginationEl = document.getElementById("pagination");
 
+const orderArray = [];
+
 let editMode = false;
+
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
 
 function formatDate(date) {
     const d = new Date(date);
-    
+
     const day = String(d.getDate()).padStart(2, '0');
-    const month = String(d.getMonth() + 1).padStart(2, '0'); // Tháng trong JS tính từ 0 đến 11
+    const month = String(d.getMonth() + 1).padStart(2, '0');
     const year = d.getFullYear();
-    
+
     return `${day}/${month}/${year}`;
 }
+
+function reverseFormatDate(dateStr) {
+    const [day, month, year] = dateStr.split('/');
+    const formattedDate = `${year}-${month}-${day}`;
+
+    return formattedDate;
+}
+
 
 document.addEventListener("DOMContentLoaded", async () => {
     paginationEl.classList.add("d-none");
@@ -43,8 +57,8 @@ document.addEventListener("click", async (e) => {
     const page = Number(link.dataset.page);
 
     removeActiveRow();
-    const orderName = document.querySelector("#search input").value;
-    await loadOrders(page, orderName);
+    const customerName = document.querySelector("#search input").value;
+    await loadOrders(page, customerName);
 });
 
 // Chọn hoặc lắng nghe sự kiện click chung trên tbody
@@ -121,58 +135,14 @@ search.addEventListener("submit", async (e) => {
     e.preventDefault();
     e.stopPropagation();
     const searchInput = document.querySelector("#search input");
-    const orderName = searchInput ? searchInput.value.trim() : "";
+    const customerName = searchInput ? searchInput.value.trim() : "";
     removeActiveRow();
-    await loadOrders(0, orderName);
-});
-
-
-// Lấy danh sách đơn hàng
-async function loadOrders(page, orderName = "") {
-    document.getElementById("info-search").innerText = "";
-    document.querySelector("#search input").value = "";
-    
-    try {
-
-        paginationEl.classList.add("d-none");
-        document.getElementById("tbody").classList.add("d-none");
-        await openModal();
-
-
-        document.getElementById("info").innerText = "";
-
-        const response = await fetch(`${urlBE}/orders?page=${page}&name=${orderName}`);
-        await closeModal();
-        paginationEl.classList.remove("d-none");
-        document.getElementById("tbody").classList.remove("d-none");
-
-        if (!response.ok) throw new Error(`GET lỗi: ${response.status}`);
-
-        const data = await response.json();
-
-        clearOrders();
-
-        const ordersList = data.content !== undefined ? data.content : data;
-
-        if (!ordersList || ordersList.length == 0) {
-            document.getElementById("info-search").innerText = `Không tìm thấy đơn hàng "${orderName}"`;
-            paginationEl.classList.add("d-none");
-            return;
-        }
-
-        renderOrders(ordersList);
-
-        if (data.totalPages !== undefined) {
-            renderPagination(data.totalPages, page);
-        } else {
-            const pagination = document.querySelector(".pagination");
-            if (pagination) pagination.innerHTML = ""; // Ẩn phân trang nếu tìm kiếm trả về danh sách phẳng
-        }
-    } catch (error) {
-        console.error("Lỗi load orders:", error);
+    if (customerName) {
+        await loadOrders(0, customerName);
+    } else {
+        await loadOrdersWithoutCustomer(0);
     }
-}
-
+});
 
 
 // Thêm đơn hàng
@@ -236,8 +206,10 @@ async function updateOrder(orderData) {
         });
 
         if (!response.ok) throw new Error(`Sửa thất bại: ${response.status}`);
+        const activePageLink = document.querySelector(".pagination .page-item.active .page-link");
+        const currentPage = activePageLink ? Number(activePageLink.dataset.page) : 0;
 
-        updateRowUI(row, orderData);
+        await loadOrders(currentPage);
 
         // Đóng modal chứa form sau khi sửa thành công
         const modalInstance = bootstrap.Modal.getInstance(modalEl);
@@ -316,13 +288,103 @@ function deleteButton(id, row) {
     );
 }
 
-
-
 // Hiển thị đơn hàng vào Table
+async function loadOrders(page, customerName = "") {
+    document.getElementById("info-search").innerText = "";
+
+    try {
+        paginationEl.classList.add("d-none");
+        document.getElementById("tbody").classList.add("d-none");
+        await openModal();
+
+        document.getElementById("info").innerText = "";
+
+        const response = await fetch(`${urlBE}/orders?page=${page}&customerName=${encodeURIComponent(customerName)}`);
+
+        await closeModal();
+        paginationEl.classList.remove("d-none");
+        document.getElementById("tbody").classList.remove("d-none");
+
+        if (!response.ok) throw new Error(`GET lỗi: ${response.status}`);
+
+        const data = await response.json();
+
+        clearOrders();
+
+        const ordersList = data.content !== undefined ? data.content : data;
+
+        if (!ordersList || ordersList.length == 0) {
+            document.getElementById("info-search").innerText = `Không tìm thấy đơn hàng "${customerName}"`;
+            paginationEl.classList.add("d-none");
+            return;
+        }
+
+        orderArray.length = 0;
+        orderArray.push(...ordersList);
+        renderOrders(ordersList);
+
+        if (data.totalPages !== undefined) {
+            renderPagination(data.totalPages, page);
+        } else {
+            const pagination = document.querySelector(".pagination");
+            if (pagination) pagination.innerHTML = "";
+        }
+    } catch (error) {
+        console.error("Lỗi load orders:", error);
+    }
+}
+
+// Hiển thị đơn hàng không có khách hàng vào Table
+async function loadOrdersWithoutCustomer(page) {
+    try {
+        paginationEl.classList.add("d-none");
+        document.getElementById("tbody").classList.add("d-none");
+        await openModal();
+
+        document.getElementById("info").innerText = "";
+
+        const response = await fetch(`${urlBE}/orders/nocustomer?page=${page}`);
+
+        await closeModal();
+        paginationEl.classList.remove("d-none");
+        document.getElementById("tbody").classList.remove("d-none");
+
+        if (!response.ok) throw new Error(`GET lỗi: ${response.status}`);
+
+        const data = await response.json();
+
+        clearOrders();
+
+        const ordersList = data.content !== undefined ? data.content : data;
+
+        if (!ordersList || ordersList.length == 0) {
+            document.getElementById("info-search").innerText = `Không tìm thấy đơn hàng "${customerName}"`;
+            paginationEl.classList.add("d-none");
+            return;
+        }
+
+        orderArray.length = 0;
+        orderArray.push(...ordersList);
+        renderOrders(ordersList);
+
+        if (data.totalPages !== undefined) {
+            renderPagination(data.totalPages, page);
+        } else {
+            const pagination = document.querySelector(".pagination");
+            if (pagination) pagination.innerHTML = "";
+        }
+    } catch (error) {
+        console.error("Lỗi load orders:", error);
+    }
+}
+
 async function renderOrders(orders) {
     const template = document.getElementById("row-order-template");
 
-    orders.forEach(order => {
+    orders.forEach(item => {
+        const order = item.order;
+        const customerName = item.customerName;
+
         const row = template.cloneNode(true);
         row.removeAttribute("id");
         row.style.display = "";
@@ -330,15 +392,22 @@ async function renderOrders(orders) {
         row.querySelector(".order-id").textContent = order.id;
         row.querySelector(".order-id").style.display = "none";
         row.querySelector(".order-customerId").textContent = order.customerId;
+
+        const nameCell = row.querySelector(".order-customerName");
+        if (nameCell) {
+            nameCell.textContent = customerName ? customerName : "N/A";
+        }
+
         row.querySelector(".order-orderDate").textContent = formatDate(order.orderDate);
         row.querySelector(".order-status").textContent = order.status;
         row.querySelector(".order-shippedDate").textContent = formatDate(order.shippedDate);
-        row.querySelector(".order-shippingFee").textContent = order.shippingFee;
+        row.querySelector(".order-shippingFee").textContent = formatNumber(order.shippingFee);
         row.querySelector(".order-paymentMethod").textContent = order.paymentMethod;
 
         tbody.appendChild(row);
     });
 }
+
 
 // Hiển thị các nút bấm phân trang
 async function renderPagination(totalPages, currentPage) {
@@ -378,11 +447,11 @@ async function renderPagination(totalPages, currentPage) {
 
 // Cập nhật lại các cell trên một Row
 function updateRowUI(row, orderData) {
-    row.querySelector(".order-customerId").textContent = orderData.customerId;
+    // row.querySelector(".order-customerId").textContent = orderData.customerId;
     row.querySelector(".order-orderDate").textContent = formatDate(orderData.orderDate);
     row.querySelector(".order-status").textContent = orderData.status;
     row.querySelector(".order-shippedDate").textContent = formatDate(orderData.shippedDate);
-    row.querySelector(".order-shippingFee").textContent = orderData.shippingFee;
+    row.querySelector(".order-shippingFee").textContent = formatNumber(orderData.shippingFee);
     row.querySelector(".order-paymentMethod").textContent = orderData.paymentMethod;
 }
 
@@ -417,8 +486,74 @@ function getFormData() {
 function fillFormFromRow(row) {
     document.getElementById("customerId").value = row.querySelector(".order-customerId").innerText;
     document.getElementById("status").value = row.querySelector(".order-status").innerText;
-    document.getElementById("orderDate").value = row.querySelector(".order-orderDate").innerText;
-    document.getElementById("shippedDate").value = row.querySelector(".order-shippedDate").innerText;
-    document.getElementById("shippingFee").checked = row.querySelector(".order-shippingFee").innerText.trim() === "x";
+    document.getElementById("orderDate").value = reverseFormatDate(row.querySelector(".order-orderDate").innerText);
+    document.getElementById("shippedDate").value = reverseFormatDate(row.querySelector(".order-shippedDate").innerText);
+    document.getElementById("shippingFee").value = row.querySelector(".order-shippingFee").innerText;
     document.getElementById("paymentMethod").value = row.querySelector(".order-paymentMethod").innerText;
+}
+
+// Sắp xếp tăng
+function sortOrders(criteria) {
+    const listCopy = [...orderArray];
+
+    switch (criteria) {
+        case 'customerId':
+            listCopy.sort((a, b) => Number(a.order.customerId) - Number(b.order.customerId));
+            break;
+        case 'customerName':
+            listCopy.sort((a, b) => {
+                const nameA = a.customerName || "";
+                const nameB = b.customerName || "";
+                return nameA.localeCompare(nameB);
+            });
+            break;
+        case 'orderDate':
+            listCopy.sort((a, b) => new Date(a.order.orderDate) - new Date(b.order.orderDate));
+            break;
+        case 'shippedDate':
+            listCopy.sort((a, b) => new Date(a.order.shippedDate) - new Date(b.order.shippedDate));
+            break;
+        case 'shippingFee':
+            listCopy.sort((a, b) => Number(a.order.shippingFee) - Number(b.order.shippingFee));
+            break;
+        default:
+            listCopy.sort((a, b) => Number(a.order.id) - Number(b.order.id));
+            break;
+    }
+
+    clearOrders();
+    renderOrders(listCopy);
+}
+
+// Sắp xếp giảm
+function sortDescendingOrders(criteria) {
+    const listCopy = [...orderArray];
+
+    switch (criteria) {
+        case 'customerId':
+            listCopy.sort((a, b) => Number(b.order.customerId) - Number(a.order.customerId));
+            break;
+        case 'customerName':
+            listCopy.sort((a, b) => {
+                const nameA = a.customerName || "";
+                const nameB = b.customerName || "";
+                return nameB.localeCompare(nameA);
+            });
+            break;
+        case 'orderDate':
+            listCopy.sort((a, b) => new Date(b.order.orderDate) - new Date(a.order.orderDate));
+            break;
+        case 'shippedDate':
+            listCopy.sort((a, b) => new Date(b.order.shippedDate) - new Date(a.order.shippedDate));
+            break;
+        case 'shippingFee':
+            listCopy.sort((a, b) => Number(b.order.shippingFee) - Number(a.order.shippingFee));
+            break;
+        default:
+            listCopy.sort((a, b) => Number(b.order.id) - Number(a.order.id));
+            break;
+    }
+
+    clearOrders();
+    renderOrders(listCopy);
 }

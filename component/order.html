@@ -25,7 +25,7 @@
         <div class="d-flex justify-content-end align-items-center gap-3 sticky-top bg-light"
             style="height: 100px; top: 50px; z-index: 11;">
             <form class="d-flex" id="search">
-                <input class="form-control me-2" type="search" placeholder="Nhập đơn cần tìm" />
+                <input class="form-control me-2" type="search" placeholder="Tìm đơn theo tên khách" />
                 <button class="btn btn-outline-dark" type="submit">Tìm</button>
             </form>
 
@@ -129,11 +129,47 @@
                     <tr class="table-dark sticky-top text-center align-middle" style="top: 150px; z-index: 10;">
 
                         <th scope="col" style="display: none;">ID</th>
-                        <th scope="col">ID khách hàng</th>
-                        <th scope="col">Ngày đặt hàng</th>
+                        <th scope="col">ID khách
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrders('customerId')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrders('customerId')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">Tên khách
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrders('customerName')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrders('customerName')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">Ngày đặt hàng
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrders('orderDate')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrders('orderDate')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
                         <th scope="col">Trạng thái</th>
-                        <th scope="col">Ngày giao hàng</th>
-                        <th scope="col">Phí vận chuyển</th>
+                        <th scope="col">Ngày giao hàng
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrders('shippedDate')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrders('shippedDate')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">Phí vận chuyển
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrders('shippingFee')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrders('shippingFee')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
                         <th scope="col">Phương thức thanh toán</th>
                         <th scope="col">Xoá</th>
                     </tr>
@@ -142,6 +178,7 @@
                     <tr id="row-order-template" style="display: none;">
                         <th scope="row" class="text-center align-middle order-id" style="display: none;">1</th>
                         <td class="order-customerId text-end align-middle">Customer ID</td>
+                        <td class="order-customerName text-end align-middle">Customer Name</td>
                         <td class="order-orderDate text-end align-middle">Order Date</td>
                         <td class="order-status text-end align-middle">Status</td>
                         <td class="order-shippedDate text-end align-middle">Shipped Date</td>
