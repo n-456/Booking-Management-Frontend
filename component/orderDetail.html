@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OrderDetail</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+        integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="../css/loadModal.css">
+    <link rel="stylesheet" href="../css/product.css">
+    <link rel="stylesheet" href="../css/spinnerModal.css">
+    <script src="https://code.jquery.com/jquery-latest.js"></script>
+</head>
+
+<body>
+    <div id="load"></div>
+
+    <header id="header"></header>
+
+    <main class="pt-5">
+        <div class="d-flex justify-content-end align-items-center gap-3 sticky-top bg-light"
+            style="height: 100px; top: 50px; z-index: 11;">
+            <form class="d-flex" id="search">
+                <input class="form-control me-2" type="search" placeholder="Tìm đơn theo tên khách" />
+                <button class="btn btn-outline-dark" type="submit">Tìm</button>
+            </form>
+
+            <button type="button" class="btn btn-dark" data-bs-target="#orderDetailModal" id="allOrderDetail">
+                Tất cả chi tiết đơn hàng
+            </button>
+
+            <button type="button" class="btn btn-dark" data-bs-target="#orderDetailModal" id="addOrderDetail">
+                Thêm
+            </button>
+
+            <button type="button" class="btn btn-dark" data-bs-target="#orderDetailModal" id="updateOrderDetail">
+                Sửa
+            </button>
+
+            <button class="btn btn-dark" id="deleteOrderDetail">Xoá</button>
+        </div>
+
+        <!-- info modal -->
+        <div id="info"></div>
+        <!-- Modal -->
+        <div class="modal fade" id="orderDetailModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Cập nhật chi tiết đơn hàng</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+
+
+                        <!-- form -->
+                        <form id="orderDetail-form" novalidate>
+
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="orderId" class="form-label">ID đơn hàng:</label>
+                                    <input type="text" class="form-control" id="orderId" required>
+                                    <div class="invalid-feedback">
+                                        Hãy nhập id đơn hàng
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="productId" class="form-label">ID sản phẩm:</label>
+                                    <input type="text" class="form-control" id="productId" required>
+                                    <div class="invalid-feedback">
+                                        Hãy nhập id sản phẩm
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <label for="quantity" class="form-label">Số lượng:</label>
+                                    <input type="number" class="form-control" id="quantity" min="1" required>
+                                    <div class="invalid-feedback">
+                                        Hãy nhập số lượng lớn hơn 1
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-6">
+                                    <label for="unitPrice" class="form-label">Đơn giá:</label>
+                                    <input type="number" class="form-control" id="unitPrice" required>
+                                    <div class="invalid-feedback">
+                                        Hãy nhập đơn giá
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <label for="discount" class="form-label">Giảm giá:</label>
+                                    <input type="number" class="form-control" id="discount" min="0" max="101" required>
+                                    <div class="invalid-feedback">
+                                        Số lớn hơn 0, nhỏ hơn 101
+                                    </div>
+                                </div>
+                            </div>
+                            <div class=" d-flex align-items-center gap-3 mt-5">
+                                <button type="button" class="btn btn-secondary w-100"
+                                    data-bs-dismiss="modal">Huỷ</button>
+                                <button type="submit" class="btn btn-dark w-100">Gửi</button>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="container">
+            <table class="table table-bordered table-striped table-hover">
+                <thead>
+                    <tr class="table-dark sticky-top text-center align-middle" style="top: 150px; z-index: 10;">
+
+                        <th scope="col" style="display: none;">ID</th>
+                        <th scope="col">ID đơn hàng
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrderDetails('orderId')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrderDetails('orderId')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">ID sản phẩm
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrderDetails('productId')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrderDetails('productId')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">Số lượng
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrderDetails('quantity')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrderDetails('quantity')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">Đơn giá
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrderDetails('unitPrice')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrderDetails('unitPrice')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">Giảm giá
+                            <div>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortOrderDetails('discount')"><i
+                                        class="fa-solid fa-up-long text-secondary"></i></button>
+                                <button class="btn btn-dark p-0 m-0" onclick="sortDescendingOrderDetails('discount')"><i
+                                        class="fa-solid fa-down-long text-secondary"></i></button>
+                            </div>
+                        </th>
+                        <th scope="col">Xoá</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <tr id="row-orderDetail-template" style="display: none;">
+                        <th scope="row" class="text-center align-middle orderDetail-id" style="display: none;">1</th>
+                        <td class="orderDetail-orderId text-end align-middle">Order ID</td>
+                        <td class="orderDetail-productId text-end align-middle">Product ID</td>
+                        <td class="orderDetail-quantity text-end align-middle">Quantity</td>
+                        <td class="orderDetail-unitPrice text-end align-middle">Unit Price</td>
+                        <td class="orderDetail-discount text-end align-middle">Discount</td>
+                        <td class="orderDetail-btn-delete text-center align-middle"><button class="btn btn-danger"
+                                onclick="deleteButton()"><i class="fa-solid fa-trash"></i></button></td>
+                    </tr>
+
+                </tbody>
+            </table>
+
+            <div id="spinner" class="table-responsive position-relative" style="height: 100px;"></div>
+        </div>
+
+        <div id="pagination" class="d-none">
+            <nav>
+                <ul class="pagination justify-content-center">
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li class="page-item">
+                        <a class="page-link" href="#" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <h3 id="info-search" class="text-center p-5"></h3>
+    </main>
+
+    <footer id="footer"></footer>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js">  </script>
+    <script src="../js/loadModal.js"></script>
+    <script src="../js/header_footer.js"></script>
+    <script src="../js/spinnerModal.js"></script>
+    <script src="../js/infoModal.js"></script>
+    <script src="../js/orderDetail.js"></script>
+</body>
+
+</html>
