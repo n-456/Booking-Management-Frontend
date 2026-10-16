@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('#header').load('../component/header.html', function (response, status, xhr) {
+    $('#header').load('../Booking-Management-Frontend/component/header.html', function (response, status, xhr) {
         if (status == "error") {
             console.log("Lỗi load file: " + xhr.status + " " + xhr.statusText);
         }
